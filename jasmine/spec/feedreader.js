@@ -34,7 +34,7 @@ $(function() {
          it('url in feedObject is defined and isn\'t empty', function() {
            allFeeds.forEach(function(feedObject){
              expect(feedObject.url).toBeDefined();
-             expect(feedObject.url).not.toBe(0);
+             expect(feedObject.url.length).not.toBe(0);
            });
          });
 
@@ -45,7 +45,7 @@ $(function() {
          it('name in feedObject is defined and ins\'t empty', function() {
            allFeeds.forEach(function(feedObject){
              expect(feedObject.name).toBeDefined();
-             expect(feedObject.name).not.toBe(0);
+             expect(feedObject.name.length).not.toBe(0);
            });
          });
 
@@ -55,9 +55,8 @@ $(function() {
     /* Test suite named "The menu" */
     describe('The menu', function() {
         /* That ensures the menu element is hidden by default. */
-         const menu = document.getElementsByTagName("body")[0];
          it('is hidden by default', function() {
-         expect(menu.className).not.toBe('');
+         expect($('body').hasClass('menu-hidden')).toBe(true);
        });
          /* That ensures the menu changes visibility when the menu icon is clicked. This test
           * should have two expectations: does the menu display when
@@ -67,10 +66,10 @@ $(function() {
 
           it('changes visibility when the menu icon is clicked', function() {
             iconList.click();
-            expect(menu.className).toBe('');
+            expect($('body').hasClass('menu-hidden')).toBe(false);
 
             iconList.click();
-            expect(menu.className).toBe('menu-hidden');
+            expect($('body').hasClass('menu-hidden')).toBe(true);
           })
     });
 
@@ -106,12 +105,16 @@ $(function() {
          let articleAfter;
 
          beforeEach(function(done){
-           articleBefor = $('h2').html();
-           loadFeed(1, done);
+           loadFeed(0, function () {
+             articleBefor = $('.feed').html();
+             loadFeed(1, function () {
+               articleAfter = $('.feed').html();
+               done();
+             })
+           })
          });
 
          it('causes change of content', function() {
-           articleAfter = $('h2').html();
            expect(articleBefor).not.toBe(articleAfter);
          });
        });
