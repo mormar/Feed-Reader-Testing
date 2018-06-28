@@ -42,7 +42,7 @@ $(function() {
          * in the allFeeds object and ensures it has a name defined
          * and that the name is not empty.
          */
-         it('name in feedObject is defined and ins\'t empty', function() {
+         it('name in feedObject is defined and isn\'t empty', function() {
            allFeeds.forEach(function(feedObject){
              expect(feedObject.name).toBeDefined();
              expect(feedObject.name.length).not.toBe(0);
@@ -70,7 +70,7 @@ $(function() {
 
             iconList.click();
             expect($('body').hasClass('menu-hidden')).toBe(true);
-          })
+          });
     });
 
     /* Test suite named "Initial Entries" */
